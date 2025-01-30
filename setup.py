@@ -27,7 +27,8 @@ setup(
         "osm2geojson>=0.1.27",
         "rasterio>=1.3.0",
         "mapclassify>=2.0.0",
-        "leafmap>=0.20.0"
+        "leafmap>=0.20.0",
+        "regex>=2.0.0"
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
