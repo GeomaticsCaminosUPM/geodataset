@@ -1,6 +1,7 @@
 import geopandas as gpd
 import pandas as pd
-import raster as rasterlib
+import .raster as rasterlib
+import rasterio
 import warnings
 import numpy as np 
 import os
@@ -435,9 +436,7 @@ class WFSPolygon:
 
 
 class from_raster_files:
-    def __init__(self,img_files, background_index, label_transform_dict = None, all_touched=False) -> None:
-        import raster as rasterlib
-        import rasterio  
+    def __init__(self,img_files, background_index, label_transform_dict = None, all_touched=False) -> None: 
         if type(img_files) is str:
             img_files = [img_files]
 
@@ -464,10 +463,8 @@ class from_raster_files:
         self.all_touched = all_touched
 
     def get(self,bounds:gpd.GeoSeries):
-        import raster
         from rasterio import features
         from shapely.geometry import shape
-        import rasterio
 
         if len(bounds) > 1: 
             bounds = gpd.GeoSeries(bounds.union_all(),crs=bounds.crs)
