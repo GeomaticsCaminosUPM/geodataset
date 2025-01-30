@@ -1,6 +1,6 @@
 import geopandas as gpd
 import pandas as pd
-import raster as rasterlib
+from . import raster as rasterlib
 import rasterio
 import warnings
 import numpy as np 
