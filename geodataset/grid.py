@@ -1,9 +1,10 @@
-import geopandas as gpd
+
 import pandas as pd
 import math
 import numpy as np
 import shapely
 import os
+import geopandas as gpd
 
 def tile_size_from_bounds(bounds:gpd.GeoSeries):
     minx,miny,maxx,maxy = bounds.to_crs(
@@ -17,7 +18,6 @@ def tile_size_from_bounds(bounds:gpd.GeoSeries):
     return tile_size
 
 def user_geom_in_map(m):
-    import geopandas as gpd
     s = m.to_html()
     geoms = []
     idx = 0
