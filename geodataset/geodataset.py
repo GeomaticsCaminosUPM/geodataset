@@ -5,10 +5,10 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 import shapely
 
-from grid import Grid
-from image import ImageData 
-from segmentation import SegmentationData 
-import raster
+from .grid import Grid
+from .image import ImageData 
+from .segmentation import SegmentationData 
+from . import raster
 
 """TODO: contours in coco do not show holes. 
 Add a test dataset option to not save annotation.
