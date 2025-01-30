@@ -19,7 +19,7 @@ setup(
         "matplotlib>=3.0.0",
         "pycocotools>=2.0.0",
         "folium>=0.16.0",
-        "cv2>=2.0.0",
+        "opencv-python>=2.0.0",
         "PIL>=6.0.0",
         "owslib>=0.32.0",
         "pyproj>=3.0.0",
