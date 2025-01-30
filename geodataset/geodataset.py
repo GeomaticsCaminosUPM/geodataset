@@ -9,20 +9,8 @@ from segmentation import SegmentationData
 import matplotlib.pyplot as plt
 import shapely
 
-#pycocotools 
-#folium
-#cv2
-#PIL
-#owslib
-#pyproj
-#ipyleaflet
-#osm2geojson
-#rasterio
-#mapclassify
-
 """TODO: contours in coco do not show holes. 
-Add a test dataset option to not save annotation 
-and a semantic option to not save so many instance geometries. 
+Add a test dataset option to not save annotation.
 Maybe add segmentation providers for all annotation formats
 Every log iterations save coco anns so that you can recover them if the download stops"""
 
