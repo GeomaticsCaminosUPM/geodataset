@@ -1,4 +1,4 @@
-import raster 
+from . import raster 
 import warnings
 import geopandas as gpd
 import numpy as np
