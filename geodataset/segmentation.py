@@ -316,7 +316,7 @@ class OSMPolygon:
         self.label_transform_dict = label_transform_dict
 
     def get(self,bounds):
-        import osm
+        from . import osm
         if len(bounds) > 1: 
             bounds = gpd.GeoSeries(bounds.union_all(),crs=bounds.crs)
         
@@ -355,7 +355,7 @@ class OSMPolygon:
         return geoms
 
     def save_metadata(self,path):
-        import osm
+        from . import osm
         path = path.split(".")
         path = os.path.normpath(path[0]+"_overpass_query.txt")
         with open(path, 'w') as file:
@@ -368,7 +368,7 @@ class WFSPolygon:
     def __init__(self, wfs, typename:str=None,version:str=None, wfs_format:str=None,crs=4326, 
                  semantic_class_column:str = None, label_transform_dict:dict = None, 
                  all_touched:bool=False, semantic_class:int=1) -> None:
-        import wms
+        from . import wms
 
         self.wfs, self.version = wms.build_wfs(wfs,version)
         self.typename = wms.check_wfs_typename(wfs,typename)
@@ -384,7 +384,7 @@ class WFSPolygon:
         self.label_transform_dict = label_transform_dict
 
     def get(self,bounds):
-        import wms
+        from . import wms
         if len(bounds) > 1: 
             bounds = gpd.GeoSeries(bounds.union_all(),crs=bounds.crs)
         
@@ -418,7 +418,7 @@ class WFSPolygon:
         return gpd.GeoDataFrame({'semantic_class':semantic_class},geometry=vect_anns.geometry,crs=vect_anns.crs)
     
     def geometry(self,bounds=None):
-        import wms
+        from . import wms
         if bounds is None:
             bounds = wms.wfs_typename_bbox(self.wfs,typename=self.typename,version=self.version)
             bounds = gpd.GeoSeries(shapely.geometry.box(*bounds),crs=4326)
@@ -428,7 +428,7 @@ class WFSPolygon:
         return geoms
 
     def save_metadata(self,path):
-        import wms
+        from . import wms
         path = path.split(".")
         path = os.path.normpath(path[0]+"_WFSCapabilities.xml")
         wms.save_wfs_getcapabilities(self.wfs,path)
