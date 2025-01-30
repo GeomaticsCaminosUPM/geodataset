@@ -151,7 +151,7 @@ class from_files:
 
 class WMS:
     def __init__(self,wms,layer:str=None,version:str=None, wms_format:str="image/jpeg",style:str=None,crs=4326) -> None:
-        import wms as wms_lib
+        from . import wms as wms_lib
 
         self.wms, self.version = wms_lib.build_wms(wms,version)
         self.layer = wms_lib.check_wms_layer(wms,layer)
@@ -162,12 +162,12 @@ class WMS:
         self.crs = crs      
     
     def basemap(self,bounds:gpd.GeoSeries=None):
-        import wms as wms_lib
+        from . import wms as wms_lib
         basemap = wms_lib.wms_folium_basemap(wms=self.wms,layer=self.layer,wms_format=self.wms_format)
         return basemap
 
     def get(self,bounds:gpd.GeoSeries, shape:tuple):
-        import wms as wms_lib      
+        from . import wms as wms_lib      
         if len(bounds) > 1: 
             bounds = gpd.GeoSeries(bounds.union_all(),crs=bounds.crs)
         
@@ -176,7 +176,7 @@ class WMS:
     
     def save_metadata(self,path):
         import os
-        import wms as wms_lib
+        from . import wms as wms_lib
         path = path.split(".")
         path = f"{path[0]}_wms_getCapabilities.xml"
         path = os.path.normpath(path)
@@ -185,7 +185,7 @@ class WMS:
 
 class WMTS:
     def __init__(self,wmts,layer:str=None,version:str=None, wmts_format:str="image/jpeg",style:str=None, tilematrixset:str = None) -> None:
-        import wms
+        from . import wms
         self.wmts, self.version = wms.build_wmts(wmts,version)
         self.layer = wms.check_wmts_layer(wmts,layer)
 
@@ -198,14 +198,14 @@ class WMTS:
         self.crs = 4326
     
     def basemap(self,bounds:gpd.GeoSeries=None):
-        import wms
+        from . import wms
         basemap = wms.wmts_folium_basemap(wmts=self.wmts,layer=self.layer,
                                           wmts_format=self.wmts_format,style=self.style,
                                           tilematrixset=self.tilematrixset,version=self.version)
         return basemap
     
     def get(self,bounds:gpd.GeoSeries, shape:tuple):
-        import wms
+        from . import wms
         if len(bounds) > 1: 
             bounds = gpd.GeoSeries(bounds.union_all(),crs=bounds.crs)
         
@@ -215,7 +215,7 @@ class WMTS:
     
     def save_metadata(self,path):
         import os
-        import wms
+        from . import wms
         path = path.split(".")
         path = f"{path[0]}_wmts_getCapabilities.xml"
         path = os.path.normpath(path)
@@ -227,7 +227,7 @@ class WMTS:
 
 class XYZ:
     def __init__(self,url,dataset_bounds) -> None:
-        import wms
+        from . import wms
         if "http" not in url:
             xyz_service_urls = wms.xyz_service_urls
             url = xyz_service_urls[url]
@@ -240,12 +240,12 @@ class XYZ:
         self.crs = 4326
     
     def basemap(self,bounds:gpd.GeoSeries=None):
-        import wms
+        from . import wms
         basemap = wms.xyz_folium_basemap(self.url)
         return basemap
     
     def get(self,bounds:gpd.GeoSeries, shape:tuple):
-        import wms
+        from . import wms
         if len(bounds) > 1: 
             bounds = gpd.GeoSeries(bounds.union_all(),crs=bounds.crs)
         
@@ -254,7 +254,7 @@ class XYZ:
     
     def save_metadata(self,path):
         import os
-        import wms
+        from . import wms
         path = path.split(".")
         path = f"{path[0]}_xyz_service_url.txt"
         path = os.path.normpath(path)
