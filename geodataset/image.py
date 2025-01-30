@@ -1,4 +1,4 @@
-import .raster 
+import raster 
 import warnings
 import geopandas as gpd
 import numpy as np
@@ -20,7 +20,6 @@ class ImageData:
 
     def img(self,bounds:gpd.GeoSeries,shape,dataset_bounds:gpd.GeoSeries|gpd.GeoDataFrame=None):
         from PIL import Image 
-        import raster
         
         bounds = bounds.copy()
         if len(bounds) > 1: 
