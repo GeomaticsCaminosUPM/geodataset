@@ -3,7 +3,7 @@ import warnings
 import geopandas as gpd
 import numpy as np
 
-class ImageDataset:
+class ImageData:
     def __init__(self,img,driver:str='JPEG') -> None:
         self.driver = driver
         self.img_obj = img
