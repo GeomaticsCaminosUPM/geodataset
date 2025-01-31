@@ -71,9 +71,6 @@ def ipyleaflet_drawable_map(center=[0, 0], zoom=11, height="800px"):
             return gdf
         else:
             return None  # No geometries drawn yet
-
-    # Display the map
-    display(m)
     
     return m, get_drawn_geometries
     
