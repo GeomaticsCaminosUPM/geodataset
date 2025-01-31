@@ -188,6 +188,7 @@ class GeoDataset:
             self.n_classes = n_classes
 
         self.dataset_bounds = grid.dataset_bounds 
+        self.grid_bounds = gpd.GeoSeries(shapely.box(*grid.grid_bounds),crs=grid.proj_crs)
 
         self.crs = self.ImageData.crs 
         self.grid = grid.grid.to_crs(self.crs)
@@ -561,7 +562,7 @@ class GeoDataset:
                     json.dump(json_dict, file, indent=4)  # `indent=4` for pretty formatting
 
 
-        grid_bounds = gpd.GeoSeries([shapely.geometry.box(*self.grid_bounds)],crs=self.grid.crs)
+        grid_bounds = self.grid_bounds
         dataset_bounds = self.dataset_bounds
         grid = self.grid
 
@@ -582,7 +583,7 @@ class GeoDataset:
 
         if self.SegDataset is not None:
             if anns_path != img_path:
-                grid_bounds = gpd.GeoSeries([shapely.geometry.box(*self.grid_bounds)],crs=self.grid.crs)
+                grid_bounds = self.grid_bounds
                 dataset_bounds = self.dataset_bounds
                 grid = self.grid
 
