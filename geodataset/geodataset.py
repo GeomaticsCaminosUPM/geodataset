@@ -9,11 +9,14 @@ from .grid import Grid
 from .image import ImageData 
 from .segmentation import SegmentationData 
 
-"""TODO: contours in coco do not show holes. 
+"""TODO: 
+Ipyleaflet basemaps
+contours in coco do not show holes. 
 Add a test dataset option to not save annotation.
 Maybe add segmentation providers for all annotation formats
 Every log iterations save coco anns so that you can recover them if the download stops
-Allow to load coco anns and add new ones. Implement coco anns with overwrite = False"""
+Allow to load coco anns and add new ones. Implement coco anns with overwrite = False
+"""
 
 def add_basemap(m,name='Google Satellite Hybrid',transparent=False):
     import folium
