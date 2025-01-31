@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import shapely
 
 from .grid import Grid
-from .image import ImageData 
+from .image import ImageDataset 
 from .segmentation import SegmentationData 
 
 """TODO: 
@@ -176,7 +176,7 @@ class GeoDataset:
         self.min_tile_coverage = min_tile_coverage 
         self.instances = instances
 
-        self.ImageData = ImageData(image) 
+        self.ImageDataset = ImageData(image) 
         
         if segmentation is None:
             self.SegDataset = None 
@@ -190,7 +190,7 @@ class GeoDataset:
         self.dataset_bounds = grid.dataset_bounds 
         self.grid_bounds = gpd.GeoSeries(shapely.box(*grid.grid_bounds),crs=grid.proj_crs)
 
-        self.crs = self.ImageData.crs 
+        self.crs = self.ImageDataset.crs 
         self.grid = grid.grid.to_crs(self.crs)
         if len(self.grid) > 0:
             self.grid = gpd.GeoSeries(
@@ -224,7 +224,7 @@ class GeoDataset:
         if bounds is None:
             bounds = self.grid.geometry[tile:tile+1].reset_index(drop=True).copy()
             
-        img, bounds = self.ImageData.img(bounds,self.shape,dataset_bounds=self.hide_outside_bounds)
+        img, bounds = self.ImageDataset.img(bounds,self.shape,dataset_bounds=self.hide_outside_bounds)
         return img, bounds
 
     def get_annotation(self,tile:int=None,bounds:gpd.GeoSeries|gpd.GeoDataFrame=None,ann_mode='raster',instances:bool=None,
@@ -397,8 +397,8 @@ class GeoDataset:
         if mode == 'grid':
             return m
 
-        if self.ImageData is not None:
-            basemap = self.ImageData.basemap(bounds=bounds)
+        if self.ImageDataset is not None:
+            basemap = self.ImageDataset.basemap(bounds=bounds)
             if basemap is not None:
                 add_basemap(m,basemap)
 
@@ -432,7 +432,7 @@ class GeoDataset:
         if ann_mode == 'coco':
             overwrite = True #######!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-        if self.ImageData is not None:     
+        if self.ImageDataset is not None:     
             if not os.path.isdir(img_path):
                 print(f"Creating image download path {img_path}")
                 os.makedirs(img_path)   
@@ -460,7 +460,7 @@ class GeoDataset:
                 print(f"\rProgress: [{'#' * (n // log)}{'.' * ((num_iterations - n) // log)}] {completed:.0f}% ({n}/{num_iterations})", end="")
                 
             bounds = self.grid.geometry[i:i+1].reset_index(drop=True).copy()
-            if self.ImageData is not None:
+            if self.ImageDataset is not None:
                 img_file = os.path.normpath(img_path+f"/tile_{i}.jpg")
                 
                 if overwrite or not(os.path.isfile(img_file)):
@@ -545,7 +545,7 @@ class GeoDataset:
                         annotation.to_file(ann_file)
 
                 
-            if self.ImageData is not None:
+            if self.ImageDataset is not None:
                 if overwrite or not(os.path.isfile(img_file)):
                     img = np.transpose(img, (2, 0, 1))
                     rasterlib.save(img_file,img,bounds=bounds,driver='JPEG')
@@ -579,7 +579,7 @@ class GeoDataset:
 
         print(f"Dataset bounds saved as {file}")  
 
-        self.ImageData.save_metadata(img_path)
+        self.ImageDataset.save_metadata(img_path)
 
         if self.SegDataset is not None:
             if anns_path != img_path:
