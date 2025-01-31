@@ -45,6 +45,10 @@ def ipyleaflet_drawable_map(center=[0, 0], zoom=11, height="800px"):
     draw_control = DrawControl(
         rectangle={"shapeOptions": {"color": "blue"}},  # Allow squares & rectangles
         polygon={"shapeOptions": {"color": "blue"}},    # Allow polygons
+        circle={},
+        polyline={},
+        marker={},
+        circlemarker={}
     )
 
     # Add the DrawControl to the map
