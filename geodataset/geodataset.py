@@ -547,7 +547,7 @@ class GeoDataset:
                 json_dict = {
                     'images' : coco_imgs,
                     'annotation' : coco_anns,
-                    'categories' : [{'id' : i} for i in np.unique(all_labels)]
+                    'categories' : [{'id' : int(i)} for i in np.unique(all_labels)]
                 }
                 json_file = os.path.normpath(anns_path + "/annotations_coco.json")
                 with open(json_file, "w") as file:
