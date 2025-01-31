@@ -36,7 +36,7 @@ def _coco_annotation(binary_mask,semantic_class,instance_id):
     area = mask_tools.area(encoded_mask)
     bbox = mask_tools.toBbox(encoded_mask)
     annotation = {'id':int(instance_id),'category_id':int(semantic_class),'bbox':[float(bbox[0]),float(bbox[1]),float(bbox[2]),float(bbox[3])],'area':float(area),'iscrowd':0,
-                    'segmentation':{'counts':encoded_mask['counts'].decode('utf-8'),'size':list(encoded_mask["size"])}}
+                    'segmentation':{'counts':encoded_mask['counts'].decode('utf-8'),'size':[int(encoded_mask["size"][0]),int(encoded_mask["size"][1])]}}
     
     return annotation 
 
