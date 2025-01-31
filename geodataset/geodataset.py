@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import shapely
 
 from .grid import Grid
-from .image import ImageDataset 
+from .image import ImageData
 from .segmentation import SegmentationData 
 
 """TODO: 
