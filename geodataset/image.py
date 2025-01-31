@@ -210,7 +210,7 @@ class WMTS:
             bounds = gpd.GeoSeries(bounds.union_all(),crs=bounds.crs)
         
         img, img_bounds = wms.request_wmts_image(self.wmts,bounds,shape,layer=self.layer,wmts_format=self.wmts_format,
-                                             style=self.style,tilematrixset=self.tilematrixset,crs=self.crs,max_zoom=self.max_zoom)        
+                                             style=self.style,tilematrixset=self.tilematrixset,max_zoom=self.max_zoom)        
         return img, img_bounds
     
     def save_metadata(self,path):
