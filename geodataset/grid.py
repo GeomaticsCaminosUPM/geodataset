@@ -17,7 +17,68 @@ def tile_size_from_bounds(bounds:gpd.GeoSeries):
     )
     return tile_size
 
-def user_geom_in_map(m):
+def ipyleaflet_drawable_map(center=[0, 0], zoom=11, height="800px"):
+    import ipyleaflet
+    import geopandas as gpd
+    from ipyleaflet import DrawControl, Map
+    from shapely.geometry import shape
+    from IPython.display import display
+    
+    """
+    Creates an interactive ipyleaflet map with drawing controls (squares & polygons).
+    
+    Returns:
+        - m: The ipyleaflet map object
+        - get_drawn_geometries: Function to return stored geometries as a GeoDataFrame
+    """
+    # Create a map
+    m = Map(center=center, zoom=zoom, scroll_wheel_zoom=True, layout={'height': height})
+
+    google_hybrid = ipyleaflet.TileLayer(
+        url="https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}",
+        name="Google Hybrid",
+        attribution="Google"
+    )
+    m.add_layer(google_hybrid)
+
+    # Create a DrawControl object with squares (rectangles) and polygons
+    draw_control = DrawControl(
+        rectangle={"shapeOptions": {"color": "blue"}},  # Allow squares & rectangles
+        polygon={"shapeOptions": {"color": "blue"}},    # Allow polygons
+    )
+
+    # Add the DrawControl to the map
+    m.add_control(draw_control)
+
+    # Initialize an empty list to store drawn geometries
+    drawn_geometries = []
+
+    # Handle drawn geometries
+    def handle_draw(self, action, geo_json):
+        """Callback function to store drawn geometries."""
+        if action == 'created':  # Store new geometries only
+            geometry = shape(geo_json['geometry'])  # Convert GeoJSON to Shapely geometry
+            drawn_geometries.append(geometry)
+            print(f"New geometry added: {geometry}")
+
+    # Register the handle_draw function
+    draw_control.on_draw(handle_draw)
+
+    def get_drawn_geometries():
+        """Returns the drawn geometries as a GeoDataFrame."""
+        if drawn_geometries:
+            gdf = gpd.GeoDataFrame({"geometry": drawn_geometries}, crs="EPSG:4326")
+            return gdf
+        else:
+            return None  # No geometries drawn yet
+
+    # Display the map
+    display(m)
+    
+    return m, get_drawn_geometries
+    
+
+def user_geom_leaflet_map(m):
     s = m.to_html()
     geoms = []
     idx = 0
