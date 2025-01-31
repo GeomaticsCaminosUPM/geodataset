@@ -8,7 +8,6 @@ import shapely
 from .grid import Grid
 from .image import ImageData 
 from .segmentation import SegmentationData 
-from . import raster
 
 """TODO: contours in coco do not show holes. 
 Add a test dataset option to not save annotation.
@@ -225,7 +224,7 @@ class GeoDataset:
 
     def get_annotation(self,tile:int=None,bounds:gpd.GeoSeries|gpd.GeoDataFrame=None,ann_mode='raster',instances:bool=None,
                                             min_area:float=None,min_object_coverage:float=None,min_tile_coverage:float=None):
-        import segmentation 
+        from . import segmentation 
 
         if min_area is None:
             min_area = self.min_area
@@ -423,7 +422,7 @@ class GeoDataset:
 
     def download(self,img_path:str,anns_path:str=None,ann_mode='coco',log:int=10,on_errors:str='ignore',overwrite:bool=False,allow_empty_anns:bool=False):
         import json
-        import raster as rasterlib
+        from . import raster as rasterlib
 
         if self.ImageData is not None:     
             if not os.path.isdir(img_path):
