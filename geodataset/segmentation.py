@@ -128,10 +128,10 @@ def raster_to_coco_ann(ann_instance, semantic_class, instance_ids):
     #binary_masks = one_hot(tensor(ann_instance,dtype=long)).numpy()
 
     if (binary_masks.shape[2]-1) != len(semantic_class):
-        raise Exception(f"Len of binary_masks is {(binary_masks.shape[2])} but len of semantic_class is {len(semantic_class)}")
+        raise Exception(f"Len of binary_masks is {(binary_masks.shape[2]-1)} but len of semantic_class is {len(semantic_class)}")
 
     if (binary_masks.shape[2]-1) != len(instance_ids):
-        raise Exception(f"Len of binary_masks is {(binary_masks.shape[2])} but len of instance_ids is {len(instance_ids)}")
+        raise Exception(f"Len of binary_masks is {(binary_masks.shape[2])-1} but len of instance_ids is {len(instance_ids)}")
 
     annotations = [_coco_annotation(binary_masks[:,:,i+1],semantic_class[i],instance_ids[i]) for i in range(binary_masks.shape[2]-1)]
     
