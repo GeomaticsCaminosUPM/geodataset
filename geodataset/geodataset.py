@@ -12,7 +12,8 @@ from .segmentation import SegmentationData
 """TODO: contours in coco do not show holes. 
 Add a test dataset option to not save annotation.
 Maybe add segmentation providers for all annotation formats
-Every log iterations save coco anns so that you can recover them if the download stops"""
+Every log iterations save coco anns so that you can recover them if the download stops
+Allow to load coco anns and add new ones. Implement coco anns with overwrite = False"""
 
 def add_basemap(m,name='Google Satellite Hybrid',transparent=False):
     import folium
@@ -424,6 +425,9 @@ class GeoDataset:
         import json
         from . import raster as rasterlib
 
+        if ann_mode == 'coco':
+            overwrite = True #######!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
         if self.ImageData is not None:     
             if not os.path.isdir(img_path):
                 print(f"Creating image download path {img_path}")
@@ -503,8 +507,8 @@ class GeoDataset:
                             instance_ids = np.arange(len(coco_anns),len(coco_anns)+len(annotation))
                             semantic_classes = []
                             for i in range(len(annotation)):
-                                annotation[i]['id'] = instance_ids[i]
-                                semantic_classes.append(annotation[i]['category_id'])
+                                annotation[i]['id'] = int(instance_ids[i])
+                                semantic_classes.append(int(annotation[i]['category_id']))
 
                             coco_anns += annotation
                         elif allow_empty_anns == False:
