@@ -216,7 +216,10 @@ class GeoDataset:
         else:
             self.hide_outside_bounds = None
 
-        self.background_index = self.SegDataset.background_index
+        if self.SegDataset is not None:
+            self.background_index = self.SegDataset.background_index
+        else:
+            self.background_index = 0
 
         self.download_tiles = []
 
