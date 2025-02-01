@@ -323,6 +323,7 @@ class OSMPolygon:
         bounds = bounds.to_crs(self.crs)
 
         vect_anns = osm.overpass_api_query(self.overpass_query,bounds=bounds)
+        vect_anns = vect_anns.loc[vect_anns.geometry.type == "Polygon"]
 
         crs = vect_anns.crs
         vect_anns.geometry = shapely.force_2d(vect_anns.geometry)
