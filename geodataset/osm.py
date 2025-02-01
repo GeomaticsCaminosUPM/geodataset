@@ -1,3 +1,5 @@
+import geopandas as gpd 
+
 def overpass_api_query(query:str,bounds:gpd.GeoDataFrame|gpd.GeoSeries):
     import requests
     from osm2geojson import json2geojson
