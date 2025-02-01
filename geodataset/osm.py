@@ -1,4 +1,5 @@
 import geopandas as gpd 
+import pandas as pd 
 
 def overpass_api_query(query:str,bounds:gpd.GeoDataFrame|gpd.GeoSeries):
     import requests
