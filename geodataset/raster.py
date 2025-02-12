@@ -289,6 +289,7 @@ def pixels_to_gdf(raster, meta, bounds:gpd.GeoSeries=None):
     return df
 
 def vectorize(imgae, bounds, background_value=0, simplify = 0, buffer=0, min_area=0):
+    crs = bounds.crs
     image = pil_to_rio(image)
     mask = image != background_value  # Create a mask to exclude the background
 
