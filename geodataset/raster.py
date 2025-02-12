@@ -294,7 +294,7 @@ def vectorize(imgae, bounds, background_value=0, simplify = 0, buffer=0, min_are
     mask = image != background_value  # Create a mask to exclude the background
 
     width, height = image.shape
-    transform = rasterio.transform.from_bounds(*bounds.total_bounds(), width, height)
+    transform = rio.transform.from_bounds(*bounds.total_bounds, width, height)
     
     # Vectorize the raster
     results = (
