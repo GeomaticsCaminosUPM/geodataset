@@ -460,6 +460,20 @@ def save(output_path:str, arr, bounds:gpd.GeoSeries, driver:str = "JPEG"):
     # Create the transformation
     transform = rio.transform.from_bounds(minx, miny, maxx, maxy, x_shape, y_shape)
 
+    
+    dtype = np.min_scalar_type(np.max(arr))
+    if 'int64' in str(dtype):
+        dtype = np.float64
+
+    if 'uint16' in str(dtype):
+        dtype = np.uint32
+
+    if 'int16' in str(dtype):
+        dtype = np.int32
+
+    if 'float16' in str(dtype):
+        dtype = np.float32
+        
     # Create the GeoTIFF file
     with rio.open(
         output_path,
@@ -468,7 +482,7 @@ def save(output_path:str, arr, bounds:gpd.GeoSeries, driver:str = "JPEG"):
         height=y_shape,
         width=x_shape,
         count=n_bands,  # Number of bands (RGB)
-        dtype=np.min_scalar_type(np.max(arr)),
+        dtype=dtype,
         crs=crs,
         transform=transform,
     ) as dst:
